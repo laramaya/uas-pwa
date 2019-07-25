@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>News Reader</title>
+    <meta name="description" content="My first PWA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#00897B" />
+
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Dicoding News Reader">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <!-- Tile icons for Windows -->
+    <meta name="msapplication-TileImage" content="icon-192.png">
+    <meta name="msapplication-TileColor" content="#2F3BA2">
+    <meta name="msapplication-starturl" content="index.html">
+    <meta name="msapplication-navbutton-color" content="#607d8b">
+
+  </head>
+  <body>
+    <!-- Navigasi -->
+    <nav class="blue-grey lighten-1" role="navigation">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo" id="logo-container">News Reader</a>
+        <a href="#" class="sidenav-trigger" data-target="nav-mobile">&#9776;</a>
+
+        <ul class="topnav right hide-on-med-and-down"></ul>
+        <ul class="sidenav" id="nav-mobile"></ul>
+      </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+
+    <div class="container" id="body-content"></div>
+
+    <script src="js/materialize.min.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/api.js"></script>
+
+    <script>
+      // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("news-sw-v1.js")
+            .then(function() {
+              console.log("Mendaftarkan service worker.");
+            })
+            .catch(function() {
+              console.log("Service worker gagal didaftarkan!");
+            });
+        });
+      } else {
+        console.log("Service worker belum didukung browser ini.");
+      }
+
+      // REQUEST API UNTUK PERTAMA KALI
+      document.addEventListener("DOMContentLoaded", function() {
+        getArticles();
+      });
+    </script>
+  </body>
+</html>
